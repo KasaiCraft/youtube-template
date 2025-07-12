@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreatorHUB - Customizable YouTube Website Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ======================= */
+        /* CUSTOMIZATION GUIDE     */
+        /* ======================= */
+        /*
+        To customize this template, you can modify:
+        
+        1. COLORS: Change the values of these CSS variables:
+           --primary: #ff0000;         (Main brand color - YouTube red by default)
+           --secondary: #282828;        (Dark backgrounds)
+           --accent: #f9a825;           (Highlight color for buttons, etc.)
+           --text-light: #ffffff;       (Light text)
+           --text-dark: #0f0f0f;        (Dark text)
+        
+        2. FONTS: Change the font-family in the * selector
+        
+        3. SIZES: Adjust container max-width, padding values, etc.
+        
+        4. CONTENT: All text content is in the HTML - just modify as needed
+        
+        5. IMAGES: Replace placeholder image URLs with your own
+        
+        6. LAYOUT: Rearrange sections by moving the HTML blocks
+        */
+        
+        :root {
+            --primary: #ff0000;
+            --primary-dark: #cc0000;
+            --secondary: #282828;
+            --accent: #f9a825;
+            --text-light: #ffffff;
+            --text-dark: #0f0f0f;
+            --bg-light: #f9f9f9;
+            --bg-dark: #121212;
+            --card-light: #ffffff;
+            --card-dark: #1f1f1f;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            transition: var(--transition);
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Hero */
+        header {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #000000 0%, #2d2d2d 100%);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .channel-name {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        .channel-tagline {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Video Grid */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .video-card {
+            background: var(--card-light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .dark-mode .video-card {
+            background: var(--card-dark);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.8);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .video-card:hover .play-icon {
+            opacity: 1;
+        }
+
+        .play-icon i {
+            color: white;
+            font-size: 24px;
+        }
+
+        .video-info {
+            padding: 20px;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .video-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .dark-mode .video-stats {
+            color: #aaa;
+        }
+
+        /* About Section */
+        .about-section {
+            background: linear-gradient(to right, var(--bg-light) 50%, #f0f0f0 50%);
+        }
+
+        .dark-mode .about-section {
+            background: linear-gradient(to right, var(--bg-dark) 50%, #1a1a1a 50%);
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-image img {
+            width: 100%;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .dark-mode .about-text p {
+            color: #ddd;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            background-color: #f5f5f5;
+        }
+
+        .dark-mode .testimonials-section {
+            background-color: #1a1a1a;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--card-light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .dark-mode .testimonial-card {
+            background: var(--card-dark);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-card:before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-content {
+            margin-bottom: 20px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            background: #ddd;
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .dark-mode .author-info p {
+            color: #aaa;
+        }
+
+        /* Collaboration Section */
+        .collab-section {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .collab-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .collab-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .collab-text {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .contact-method:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Customization Guide Section */
+        .customization-section {
+            background-color: var(--secondary);
+            color: var(--text-light);
+        }
+
+        .steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .custom-step {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 25px;
+            width: calc(33.333% - 30px);
+            min-width: 280px;
+            transition: var(--transition);
+        }
+
+        .custom-step:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-light);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .dark-mode .theme-toggle {
+            background: var(--card-dark);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-toggle i {
+            font-size: 1.3rem;
+            color: var(--text-dark);
+        }
+
+        .dark-mode .theme-toggle i {
+            color: var(--text-light);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
+            50% { text-shadow: 0 0 25px rgba(255, 0, 0, 0.9), 0 0 35px rgba(255, 50, 50, 0.6); }
+            100% { text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .channel-name {
+                font-size: 3rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .custom-step {
+                width: calc(50% - 30px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .channel-name {
+                font-size: 2.5rem;
+            }
+            
+            .channel-tagline {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .contact-methods {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .custom-step {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .channel-name {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .collab-text {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="hero-content">
+            <h1 class="channel-name">CREATOR<span style="color: var(--primary);">HUB</span></h1>
+            <p class="channel-tagline">Your personal YouTube channel website template designed for creators who want to showcase their content professionally.</p>
+            <div class="hero-btns">
+                <a href="#videos" class="btn btn-primary">View My Videos</a>
+                <a href="#collab" class="btn btn-secondary">Collaborate With Me</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Video Grid Section -->
+    <section class="section" id="videos">
+        <div class="container">
+            <h2 class="section-title">Latest Videos</h2>
+            <div class="video-grid">
+                <!-- Video cards - Duplicate this block to add more videos -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Video Thumbnail">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">How to Grow Your YouTube Channel in 2023</h3>
+                        <div class="video-stats">
+                            <span>25K views</span>
+                            <span>2 days ago</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Duplicate this block for more videos -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://i.ytimg.com/vi/jNQXAC9IVRw/hqdefault.jpg" alt="Video Thumbnail">
+                        <div class="play-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">My New Camera Setup for Vlogging</h3>
+                        <div class="video-stats">
+                            <span>42K views</span>
+                            <span>1 week ago</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More video cards... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <!-- Replace with your photo -->
+                    <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600&q=80" alt="About the Creator">
+                </div>
+                <div class="about-text">
+                    <h2>About The Creator</h2>
+                    <!-- Update your bio here -->
+                    <p>Hi, I'm Alex! I've been creating YouTube content for over 5 years, focusing on tech reviews, vlogging, and creative tutorials. What started as a hobby has grown into a passionate community of over 250,000 subscribers.</p>
+                    <p>My mission is to create content that educates, entertains, and inspires. I believe in authenticity and building genuine connections with my audience through consistent, high-quality videos.</p>
+                    <p>When I'm not filming or editing, you can find me hiking, experimenting with new tech gadgets, or drinking way too much coffee while planning my next video project.</p>
+                    <div class="social-links">
+                        <!-- Update with your social links -->
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customization Guide Section -->
+    <section class="section customization-section">
+        <div class="container">
+            <h2 class="section-title">Easy Customization Guide</h2>
+            <div class="steps-container">
+                <div class="custom-step">
+                    <div class="step-number">1</div>
+                    <h3>Change Colors</h3>
+                    <p>Modify the CSS variables at the top of the style section to match your brand colors.</p>
+                </div>
+                
+                <div class="custom-step">
+                    <div class="step-number">2</div>
+                    <h3>Update Content</h3>
+                    <p>Replace all placeholder text with your own content. Update video titles, descriptions, and about section.</p>
+                </div>
+                
+                <div class="custom-step">
+                    <div class="step-number">3</div>
+                    <h3>Add Your Media</h3>
+                    <p>Replace placeholder images with your own channel banner, profile photo, and video thumbnails.</p>
+                </div>
+                
+                <div class="custom-step">
+                    <div class="step-number">4</div>
+                    <h3>Add More Sections</h3>
+                    <p>Duplicate existing sections and modify them to add features like merchandise, courses, or events.</p>
+                </div>
+                
+                <div class="custom-step">
+                    <div class="step-number">5</div>
+                    <h3>Social Links</h3>
+                    <p>Update all social media links with your actual profile URLs.</p>
+                </div>
+                
+                <div class="custom-step">
+                    <div class="step-number">6</div>
+                    <h3>Contact Info</h3>
+                    <p>Update the business inquiry section with your actual contact details.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaboration Section -->
+    <section class="section collab-section" id="collab">
+        <div class="container">
+            <div class="collab-content">
+                <div class="collab-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h2 class="collab-text">Let's Create Something Amazing Together</h2>
+                <p>I'm always open to collaboration opportunities with brands, fellow creators, and creative professionals.</p>
+                
+                <div class="contact-methods">
+                    <!-- Update with your contact info -->
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <span>contact@yourchannel.com</span>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>CreatorHUB</h3>
+                    <p>Your personal YouTube channel website template designed for creators who want to showcase their content professionally.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#videos">Latest Videos</a></li>
+                        <li><a href="#">Popular Videos</a></li>
+                        <li><a href="#">Playlists</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Merchandise</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Creator Resources</a></li>
+                        <li><a href="#">Equipment Guide</a></li>
+                        <li><a href="#">Editing Tutorials</a></li>
+                        <li><a href="#">Growth Strategies</a></li>
+                        <li><a href="#">Monetization Tips</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 CreatorHUB - Personal YouTube Channel Website. All rights reserved. Designed for YouTube creators.</p>
+                <p>Customize this template to match your brand!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+            body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
